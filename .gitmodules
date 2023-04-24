@@ -1,0 +1,12 @@
+[submodule "libs/cxxopts"]
+	path = libs/cxxopts
+	url = https://github.com/jarro2783/cxxopts.git
+[submodule "libs/libmodbus"]
+	path = libs/libmodbus
+	url = https://github.com/stephane/libmodbus.git
+[submodule "libs/cxxshm"]
+	path = libs/cxxshm
+	url = https://github.com/NikolasK-source/cxxshm.git
+[submodule "libs/cxxsignal"]
+	path = libs/cxxsignal
+	url = https://github.com/NikolasK-source/cxxsignal.git
