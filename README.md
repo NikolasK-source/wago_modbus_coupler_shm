@@ -1,80 +1,40 @@
-# CMake Project template
+# WAGO Modbus Coupler SHM
 
-This repository is a template for CMake C++ Projects.
+Modbus Server that connects to a WAGO Modbus TCP Coupler and synchronizes the registers with a local shared memory.
 
-## Supported Compiilers
 
-    - gcc
-    - clang
+## Build
+```
+git submodule init
+git submodule update
+mkdir build
+cd build
+cmake .. -DCMAKE_CXX_COMPILER=$(which clang++) -DCMAKE_BUILD_TYPE=Release -DCLANG_FORMAT=OFF -DCOMPILER_WARNINGS=OFF
+cmake --build .
+```
 
-## Project structure
+## Use
+```
+wago_modbus_coupler_shm [OPTION...] host [service]
 
-### Directory src
-Use this directory for all source files of the project.
+      --force             Force the use of the shared memory even if it already exists. Do not use this option per 
+                          default! It should only be used if the shared memory of an improperly terminated instance 
+                          continues to exist as an orphan and is no longer used.
+  -q, --quiet             Disable output
+  -d, --debug             Enable modbus debug output
+      --read-start-image  do not initialize output registers with zero, but read values from coupler
+  -p, --prefix arg        name prefix for the shared memories (default: wago_)
+      --version           print application version
+      --license           show licences
+  -h, --help              print usage
+      host                host or address of the WAGO Modbus TCP Coupler
+      service             service or port of the WAGO Modbus TCP Coupler (default: 502)
+```
 
-### Directory libs
-Place libraries here. This Directory is added to the include path.
-
-## Scripts
-
-### check_format.sh
-This script checks all ```*.cpp``` and ```*.hpp``` files for conformity with the file ```.clang-format```.
-
-### format.sh
-This script formats all ```*.cpp``` and ```*.hpp``` files in the src directory with clang format.
-The files are changed by it!
-
-## Options
-
-### Target
-The name of the executable that is generated.
-
-### STANDARD
-The minimum required C++ standard: 98, 03, 11, 14, 17, 20
-
-### ARCHITECTURE
-The CPU architecture for which the code is generated.
-It is only relevant if the option ```OPTIMIZE_FOR_ARCHITECTURE``` is enabled.
-
-```native``` should be the best choice in most cases.
-
-### BUILD_DOC
-Enables the automatic generation of a doxygen documentation.
-Doxygen must be installed on the system and a ```Doxyfile.in``` file must be provided.
-An additional CMake target is created.
-
-### COMPILER_WARNINGS
-Enable/Disable compiler warnings.
-
-### ENABLE_MULTITHREADING
-Link the default multithreading library for the current target system.
-Prefers ```pthread``` if available.
-
-### MAKE_32_BIT_BINARY
-Forces the compiler to generate a 32 bit application by setting the ```-m32``` flag.
-
-### OPENMP
-Enables the support for openmp.
-
-### OPTIMIZE_DEBUG
-Enables Optimization ```-O3``` also in debug configuration.
-Should only be enabled if the resulting binary is too slow.
-
-### CLANG_FORMAT
-Enable automatic formatting via clang-format.
-An additional CMake target is created.
-
-### CLANG_TIDY
-Enable static code checks with clang tidy.
-An additional CMake target is created.
-
-Not usable in this version due to contradictory warnings.
-
-### LTO_ENABLED
-Enable interprocedural and link time optimizations.
-
-### COMPILER_EXTENSIONS
-Enable compiler specific C++ extensions.
-Should be disabled for reasons of portability.
-
+## Libraries
+This application uses the following libraries:
+- cxxopts by jarro2783 (https://github.com/jarro2783/cxxopts)
+- libmodbus by Stéphane Raimbault (https://github.com/stephane/libmodbus)
+- cxxshm (https://github.com/NikolasK-source/cxxshm)
+- cxxsignal (https://github.com/NikolasK-source/cxxsignal)
 
