@@ -101,8 +101,6 @@ int main(int argc, char **argv) {
         std::cout << options.help();
         std::cout << "  host      host or address of the WAGO Modbus TCP Coupler" << std::endl;
         std::cout << "  service   service or port of the WAGO Modbus TCP Coupler (default: 502)" << std::endl;
-        std::cout << std::endl;
-        std::cout << "!!! This is an internal test tool, do not distribute !!!" << std::endl;
         return EX_OK;
     }
 
