@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Nikolas Koesling <nikolas.koesling@siemens-energy.com>.
+ * Copyright (C) 2023 Nikolas Koesling <nikolas.koesling@siemens-energy.com>.
  */
 
 #include "WAGO_MB_Clamps.hpp"

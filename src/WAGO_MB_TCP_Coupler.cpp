@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Nikolas Koesling <nikolas@koesling.info>.
+ * Copyright (C) 2023 Nikolas Koesling <nikolas@koesling.info>.
  */
 
 #include "WAGO_MB_TCP_Coupler.hpp"
