@@ -3,6 +3,7 @@
  * This program is free software. You can redistribute it and/or modify it under the terms of the MIT License.
  */
 
+#include <array>
 #include <csignal>
 #include <filesystem>
 #include <iostream>
@@ -28,16 +29,16 @@
 #include "Print_Time.hpp"
 #include "WAGO_MB_TCP_Coupler.hpp"
 
-constexpr std::array<int, 10> TERM_SIGNALS = {SIGINT,
-                                              SIGTERM,
-                                              SIGHUP,
-                                              SIGIO,  // should not happen
-                                              SIGPIPE,
-                                              SIGPOLL,  // should not happen
-                                              SIGPROF,  // should not happen
-                                              SIGUSR1,
-                                              SIGUSR2,
-                                              SIGVTALRM};
+static constexpr std::array<int, 10> TERM_SIGNALS = {SIGINT,
+                                                     SIGTERM,
+                                                     SIGHUP,
+                                                     SIGIO,  // should not happen
+                                                     SIGPIPE,
+                                                     SIGPOLL,  // should not happen
+                                                     SIGPROF,  // should not happen
+                                                     SIGUSR1,
+                                                     SIGUSR2,
+                                                     SIGVTALRM};
 
 int main(int argc, char **argv) {
     const std::string exe_name = std::filesystem::path(argv[0]).filename().string();
@@ -74,11 +75,12 @@ int main(int argc, char **argv) {
                           "It should only be used if the shared memory of an improperly terminated instance continues "
                           "to exist as an orphan and is no longer used.");
     options.add_options()("q,quiet", "Disable output");
-    options.add_options()("d,debug", "Enable modbus debug output");  // TODO
+    options.add_options()("d,debug", "Enable modbus debug output");
     options.add_options()("read-start-image",
                           "do not initialize output registers with zero, but read values from coupler");
     options.add_options()(
             "p,prefix", "name prefix for the shared memories", cxxopts::value<std::string>()->default_value("wago_"));
+    options.add_options()("version", "print application version");
     options.add_options()("host", "Modbus client host/address", cxxopts::value<std::string>());
     options.add_options()("service", "Modbus port or service", cxxopts::value<std::string>()->default_value("502"));
     options.add_options()("h,help", "print usage");
@@ -104,15 +106,25 @@ int main(int argc, char **argv) {
         return EX_OK;
     }
 
+    if (args.count("version")) {
+        std::cout << PROJECT_NAME << ' ' << PROJECT_VERSION << " (compiled with " << COMPILER_INFO << " on "
+                  << SYSTEM_INFO << ')'
+#ifndef OS_LINUX
+                  << "-nonlinux"
+#endif
+                  << std::endl;
+        return EX_OK;
+    }
+
     if (args.count("host") == 0) {
         std::cerr << "ERROR: no host specified" << std::endl;
         return exit_usage();
     }
 
-    const std::string           &service = args.count("service") ? args["service"].as<std::string>() : "502";
-    const auto FORCE_SHM   = args.count("force") > 0;
-    const auto QUIET       = args.count("quiet") > 0;
-    const auto START_IMAGE = args.count("read-start-image") > 0;
+    const std::string &service     = args.count("service") ? args["service"].as<std::string>() : "502";
+    const auto         FORCE_SHM   = args.count("force") > 0;
+    const auto         QUIET       = args.count("quiet") > 0;
+    const auto         START_IMAGE = args.count("read-start-image") > 0;
 
     WAGO_Modbus::TCP_Coupler_SHM wago(args["host"].as<std::string>(), service, args.count("debug") > 0 && !QUIET);
 
