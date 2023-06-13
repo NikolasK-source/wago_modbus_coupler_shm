@@ -11,6 +11,7 @@ target_sources(${Target} PRIVATE Modbus_TCP_Server.cpp)
 target_sources(${Target} PRIVATE WAGO_MB_Clamps.cpp)
 target_sources(${Target} PRIVATE WAGO_MB_TCP_Coupler.cpp)
 target_sources(${Target} PRIVATE Print_Time.cpp)
+target_sources(${Target} PRIVATE license.cpp)
 
 
 # ---------------------------------------- header files (*.jpp, *.h, ...) ----------------------------------------------
@@ -21,6 +22,7 @@ target_sources(${Target} PRIVATE Modbus_TCP_Server.hpp)
 target_sources(${Target} PRIVATE WAGO_MB_Clamps.hpp)
 target_sources(${Target} PRIVATE WAGO_MB_TCP_Coupler.hpp)
 target_sources(${Target} PRIVATE Print_Time.hpp)
+target_sources(${Target} PRIVATE license.hpp)
 
 
 # ---------------------------------------- subdirectories --------------------------------------------------------------

@@ -3,6 +3,8 @@
  * This program is free software. You can redistribute it and/or modify it under the terms of the MIT License.
  */
 
+#include "license.hpp"
+
 #include <array>
 #include <csignal>
 #include <filesystem>
@@ -81,6 +83,7 @@ int main(int argc, char **argv) {
     options.add_options()(
             "p,prefix", "name prefix for the shared memories", cxxopts::value<std::string>()->default_value("wago_"));
     options.add_options()("version", "print application version");
+    options.add_options()("license", "show licences");
     options.add_options()("host", "Modbus client host/address", cxxopts::value<std::string>());
     options.add_options()("service", "Modbus port or service", cxxopts::value<std::string>()->default_value("502"));
     options.add_options()("h,help", "print usage");
@@ -99,8 +102,9 @@ int main(int argc, char **argv) {
     if (args.count("help")) {
         options.set_width(120);
         std::cout << options.help();
-        std::cout << "  host      host or address of the WAGO Modbus TCP Coupler" << std::endl;
-        std::cout << "  service   service or port of the WAGO Modbus TCP Coupler (default: 502)" << std::endl;
+        std::cout << "      host                host or address of the WAGO Modbus TCP Coupler" << std::endl;
+        std::cout << "      service             service or port of the WAGO Modbus TCP Coupler (default: 502)"
+                  << std::endl;
         return EX_OK;
     }
 
@@ -111,6 +115,12 @@ int main(int argc, char **argv) {
                   << "-nonlinux"
 #endif
                   << std::endl;
+        return EX_OK;
+    }
+
+    // print licenses
+    if (args.count("license")) {
+        print_licenses(std::cout);
         return EX_OK;
     }
 
