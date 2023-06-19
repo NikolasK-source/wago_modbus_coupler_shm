@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.13.4 FATAL_ERROR)
 # ======================================================================================================================
 
 # project
-project(WAGO_Modbus_Coupler_SHM LANGUAGES CXX VERSION 0.0.1)
+project(WAGO_Modbus_Coupler_SHM LANGUAGES CXX VERSION 1.0.0)
 
 # settings
 set(Target "wago_modbus_coupler_shm")    # Executable name (without file extension!)
