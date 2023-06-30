@@ -12,6 +12,7 @@
 #include <iostream>
 #include <sysexits.h>
 #include <thread>
+#include <unistd.h>
 
 // cxxopts, but all warnings disabled
 #ifdef COMPILER_CLANG
